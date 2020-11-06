@@ -1,27 +1,35 @@
 package com.lambdaschool.zoos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "telephones")
-public class Telephones {
+public class Telephone extends Auditable{
     @Autowired
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long phoneid;
     private String phonetype;
     private String phonenumber;
 
-    public Telephones(String phonetype, String phonenumber) {
+    @Column(nullable = false)
+    private String phonetype;
+    @Column(nullable = false)
+    private String phonenumber;
+
+    @ManyToOne
+    @JoinColumn(name = "zooid", nullable = false)
+    @JsonIgnoreProperties(value = "telephones", allowSetters = true)
+    private Zoo zoo
+
+    public Telephone(String phonetype, String phonenumber) {
         this.phonetype = phonetype;
         this.phonenumber = phonenumber;
     }
 
-    public Telephones() {
+    public Telephone() {
     }
 
     public long getPhoneid() {
@@ -42,5 +50,17 @@ public class Telephones {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public void setPhoneid(long phoneid) {
+        this.phoneid = phoneid;
+    }
+
+    public Zoo getZoo() {
+        return zoo;
+    }
+
+    public void setZoo(Zoo zoo) {
+        this.zoo = zoo;
     }
 }

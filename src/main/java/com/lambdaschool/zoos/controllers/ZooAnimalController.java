@@ -1,4 +1,8 @@
 package com.lambdaschool.zoos.controllers;
 
-public class ZooAnimalController {
+import com.lambdaschool.zoos.models.ZooAnimals;
+import org.springframework.data.repository.CrudRepository;
+
+public class ZooAnimalController extends CrudRepository<ZooAnimals, Long> {
+
 }
